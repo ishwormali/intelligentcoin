@@ -1,0 +1,26 @@
+{
+  "name": "intelligentcoin",
+  "version": "1.0.0",
+  "description": "Coin alert",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishwormali/intelligentcoin.git"
+  },
+  "keywords": [
+    "itc"
+  ],
+  "author": "Ishwor Mali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishwormali/intelligentcoin/issues"
+  },
+  "homepage": "https://github.com/ishwormali/intelligentcoin#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "mongoose": "^5.0.0"
+  }
+}
