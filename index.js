@@ -1,19 +1,19 @@
-var coinApi=require('./services/coinApi');
-// var repo=require('./repository/repository');
-var service=require('./services/coinServices');
+var coinCollector=require('./services/coinCollector');
+var coinAnalytics=require('./services/coinAnalytics');
+var repo=require('./repository');
+// var dataAlert=require('./repository/models/dataAlert');
 
+// seed();
+// coinCollector.start();
 
-
-setTimeout(processApi,1000);
-
-function processApi(){
-    coinApi.getPrices()
-        .then(function(data){
-            console.log(data);
-            service.addCoinHistory(data);
-            setTimeout(processApi,55000);
-        },function(err){
-            setTimeout(processApi,1000);
-        });
+async function seed(){
+    var count=await repo.models.DataAlert.count({});
+    if(count==0){
+        var schedules=[
+            {coinId:'ETH',alertType:'falling', currencySymbol:'aud',dataCron:'1000 *',dateCreated:Date.now()},
+            {coinId:'ETH',alertType:'rising', currencySymbol:'aud',dataCron:'* *',dateCreated:Date.now()}
+                        ];
+        repo.models.DataAlert.insertMany(schedules);
+    }
+    
 }
-

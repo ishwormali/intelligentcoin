@@ -1,28 +1,30 @@
-var repo=require('../repository/repository');
+var repo=require('../repository');
 
 var service={
 
 }
 
-service.addCoinHistory=function(coinHistories) {
-    for(coinId in coinHistories){
-        var historyItem=coinHistories[coinId];
-        console.log(coinId);
-        var model=new repo.models.CoinHistory({
-            coinId:coinId,
-            btc:historyItem.btc,
-            usd:historyItem.usd,
-            aud:historyItem.aud,
-            date:Date.now()
-        });
-        model.save(function(err,saved){
-            if(err){
-                console.log('error saving model');
-                console.log(err);    
-            }
+service.addCoinHistory=async function(coinHistories) {
+    try {
+        for(coinId in coinHistories){
+            var historyItem=coinHistories[coinId];
+            // console.log(coinId);
+            var model=new repo.models.CoinHistory({
+                coinId:coinId,
+                btc:historyItem.BTC,
+                usd:historyItem.USD,
+                aud:historyItem.AUD,
+                date:Date.now()
+            });
+            await model.save();
             
-        });
+            // console.log('document saved');
+            
+        }
+    } catch (error) {
+        
     }
+    
     
 }
 

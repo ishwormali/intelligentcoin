@@ -21,6 +21,7 @@
   "homepage": "https://github.com/ishwormali/intelligentcoin#readme",
   "dependencies": {
     "axios": "^0.17.1",
-    "mongoose": "^5.0.0"
+    "mongoose": "^5.0.0",
+    "pubsub-js": "^1.6.0"
   }
 }
