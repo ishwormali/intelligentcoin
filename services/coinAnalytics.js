@@ -59,14 +59,27 @@ async function onNewData(msg,data){
                 
             }
             else if (relExp!=null && relExp!="*"){
-                var relPcExp=relExp.substr(0,1)=="%"?relExp:null;
+                var relPcExp=relExp.substr(0,1)=="%"?parseFloat(relExp.replace('%','')):null;
                 var relAbsExp=relPcExp==null?relExp:null;
                 // if(relPcExp!=null){
                 //     var variance=latestData[dataAlert.currencySymbol]-;
                 //     var pcChange=
                 // }
-                if(dataAlert.alertType=="falling"){
-
+                
+                if(dataAlert.alertType=="negativechange"){
+                    var lastTopCoinHistories=await repo.models.CoinHistory.find()
+                                    .where('coinId').eq(dataAlert.coinId)
+                                    .where(dataAlert.currencySymbol).gt(latestData[dataAlert.currencySymbol])
+                                    .sort({_id:-1}).limit(1).exec();
+                    if(lastTopCoinHistories!=null && lastTopCoinHistories.length>0){
+                        var lastTopCoinHistory=lastTopCoinHistories[0];
+                        if(relPcExp!=null){
+                            var change=lastTopCoinHistory[dataAlert.currencySymbol]-latestData[dataAlert.currencySymbol];
+                            if((change * 100)/lastTopCoinHistory[dataAlert.currencySymbol]>=relPcExp){
+                                console.log(`alert negativeChange by ${relPcExp}`);
+                            }
+                        }
+                    }
                 }
             }
 
